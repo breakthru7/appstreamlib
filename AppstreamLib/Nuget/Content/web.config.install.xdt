@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+   <appSettings xdt:Transform="InsertIfMissing">
+		<add key="Email.Host" value="ie:mail.gentingtaxi.com" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="Email.Sender" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="Email.Sender.Password" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="Email.Sender.Name" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="Email.Port" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+
+		<add key="sms.client" value="https://www.etracker.cc" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="sms.endpoint" value="bulksms/mesapi.aspx" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="sms.user" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="sms.password" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="sms.sender" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+		<add key="sms.servid" value="MES01" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+     
+     <add key="rest.call.endpoint" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+	</appSettings>
+</configuration>

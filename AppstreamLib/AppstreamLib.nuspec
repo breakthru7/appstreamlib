@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Appstream.Appstreamlib</id>
+    <version>3.1.0</version>
+    <title>Appstreamlib</title>
+    <authors>Appstream</authors>
+    <owners>Appstream</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Appstream Class Library</description>
+    <releaseNotes>Base Release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Appstream</tags>
+  </metadata>
+  <files>
+    <file src="NuGet\Content\web.config.install.xdt" target="content" />
+    <file src="NuGet\Content\web.config.uninstall.xdt" target="content" />
+  </files>
+</package>
