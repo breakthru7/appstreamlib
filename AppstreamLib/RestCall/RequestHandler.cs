@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.IO;
+using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Text.RegularExpressions;
-using System.Configuration;
-using RestSharp;
 
 namespace AppstreamLib.RestCall
 {
 
     public class RequestHandler
     {
-        public static async Task<object> MakeGetRequest<T>(string token, string servicename , string tokenname = "token" , bool isIdsrvr = false ) 
+        public static async Task<object> MakeGetRequest<T>(string token, string servicename, string tokenname = "token", bool isIdsrvr = false)
         {
             try
             {
@@ -29,7 +24,7 @@ namespace AppstreamLib.RestCall
 
                 if (tokenname == "Authorization")
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 }
                 else
                 {
@@ -41,7 +36,6 @@ namespace AppstreamLib.RestCall
 
                 if (httpresponse.StatusCode == HttpStatusCode.Forbidden)
                 {
-
                     throw new Exception(httpresponse.ReasonPhrase);
                 }
                 else if (httpresponse.StatusCode != HttpStatusCode.OK)
@@ -59,10 +53,9 @@ namespace AppstreamLib.RestCall
             {
                 throw new Exception(ex.Message);
             }
-        }   
+        }
 
-
-        public static async Task<object> MakePostRequest<T>(string token, string servicename, object body = null , string tokenname = "token") 
+        public static async Task<object> MakePostRequest<T>(string token, string servicename, object body = null, string tokenname = "token")
         {
             try
             {
@@ -76,9 +69,9 @@ namespace AppstreamLib.RestCall
                       .Accept
                       .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                if(tokenname == "Authorization")
+                if (tokenname == "Authorization")
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 }
                 else
                 {
@@ -88,7 +81,7 @@ namespace AppstreamLib.RestCall
                 string postbody = JsonConvert.SerializeObject(body);
 
                 var httpresponse = await client.PostAsync(ConfigurationManager.AppSettings["rest.call.endpoint"] + servicename, new StringContent(postbody, Encoding.UTF8, "text/json"));
-                var jsonContent =  await httpresponse.Content.ReadAsStringAsync();
+                var jsonContent = await httpresponse.Content.ReadAsStringAsync();
 
                 if (httpresponse.StatusCode == HttpStatusCode.Forbidden)
                 {
@@ -146,7 +139,6 @@ namespace AppstreamLib.RestCall
             }
         }
 
-
         public static object IdentityserverTokenRequest<T>(string endpoint, string body = "") where T : new()
         {
             try
@@ -155,7 +147,7 @@ namespace AppstreamLib.RestCall
                 var request = new RestRequest();
 
                 request.Method = Method.POST;
-                request.AddParameter("application/x-www-form-urlencoded", body , ParameterType.RequestBody);
+                request.AddParameter("application/x-www-form-urlencoded", body, ParameterType.RequestBody);
 
                 var taskCompletionSource = new TaskCompletionSource<T>();
                 var response = client.Execute<T>(request);
