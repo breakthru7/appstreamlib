@@ -35,7 +35,7 @@ namespace AppstreamLib.RestCall
                 var jsonContent = await httpresponse.Content.ReadAsStringAsync();
 
                 if (httpresponse.StatusCode == HttpStatusCode.Forbidden)
-                {
+                {   
                     throw new Exception(httpresponse.ReasonPhrase);
                 }
                 else if (httpresponse.StatusCode != HttpStatusCode.OK)
@@ -83,13 +83,20 @@ namespace AppstreamLib.RestCall
                 var httpresponse = await client.PostAsync(ConfigurationManager.AppSettings["rest.call.endpoint"] + servicename, new StringContent(postbody, Encoding.UTF8, "text/json"));
                 var jsonContent = await httpresponse.Content.ReadAsStringAsync();
 
-                if (httpresponse.StatusCode == HttpStatusCode.Forbidden)
+                if (httpresponse.StatusCode == HttpStatusCode.Forbidden || httpresponse.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     throw new Exception(httpresponse.ReasonPhrase);
                 }
                 else if (httpresponse.StatusCode != HttpStatusCode.OK && httpresponse.StatusCode != HttpStatusCode.Created)
                 {
+                    if (string.IsNullOrEmpty(jsonContent))
+                    {
+                        // rest of the exception
+                        throw new Exception(httpresponse.StatusCode + " " + httpresponse.ReasonPhrase);
+                    }
+
                     var responsestatus = JsonConvert.DeserializeObject<ResponseStatusRoot>(jsonContent);
+
                     throw new Exception(responsestatus.ResponseStatus.Message);
                 }
                 else
@@ -97,41 +104,7 @@ namespace AppstreamLib.RestCall
                     var result = JsonConvert.DeserializeObject<T>(jsonContent);
                     return result;
                 }
-
-                /*
-                var client = new RestClient(ConfigurationManager.AppSettings["rest.call.endpoint"] + servicename);
-                var request = new RestRequest();
-
-                request.Method = Method.POST;
-                request.AddHeader("Content-type", "application/json");
-                request.AddHeader(tokenname, token);
-
-                if(tokenname == "Authorization")
-                {
-                    request.AddParameter(tokenname, token ,ParameterType.HttpHeader);
-                }
-
-                request.AddJsonBody(body);
-
-                var taskCompletionSource = new TaskCompletionSource<IRestResponse<T>>();
-
-                client.ExecuteAsync(request, response => {
-
-                    taskCompletionSource.SetResult(response);
-                });
-
-                return taskCompletionSource.Task;
-
-                //var response = client.Execute<T>(request);
-                /*
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    throw new Exception(response.ErrorMessage + response.Content);
-                }
-                else
-                {
-                    return response;
-                }*/
+                
             }
             catch (Exception ex)
             {
