@@ -8,6 +8,6 @@ namespace AppstreamLib.Interfaces
 {
     interface IMessage
     {
-        bool Send(string key, string to, string title, string content, object data);
+        bool Send(string to, string title, string content, object data);
     }
 }

@@ -14,6 +14,8 @@
 		<add key="sms.sender" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
 		<add key="sms.servid" value="MES01" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
      
-     <add key="rest.call.endpoint" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+    <add key="rest.call.endpoint" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
+    
+    <add key="fcm.authkey" value="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(key)"/>
 	</appSettings>
 </configuration>

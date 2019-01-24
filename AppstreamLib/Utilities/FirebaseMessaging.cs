@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AppstreamLib.Interfaces;
+﻿using AppstreamLib.Interfaces;
 using RestSharp;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Dynamic;
 
 namespace AppstreamLib.Utilities
 {
@@ -36,8 +33,9 @@ namespace AppstreamLib.Utilities
             private set;
         }
 
-        public bool Send(string authKey, string to, string title, string body, object data = null)
+        public bool Send(string to, string title, string body, object data = null)
         {
+            string authKey = ConfigurationManager.AppSettings["fcm.authkey"];
             var request = new RestRequest(fcmSend, Method.POST);
             request.AddHeader("Authorization", authKey);
             request.AddHeader("Accept", "application/json");
@@ -62,8 +60,8 @@ namespace AppstreamLib.Utilities
             //var content = response.Content; // raw content as string
             //var statusCode = response.StatusCode.ToString();
 
-            IRestResponse<fcmResponse> response2 = client.Execute<fcmResponse>(request);
-            var failure = response2.Data.failure;
+            IRestResponse<fcmResponse> response = client.Execute<fcmResponse>(request);
+            var failure = response.Data.failure;
 
             return !(failure > 0);
         }
