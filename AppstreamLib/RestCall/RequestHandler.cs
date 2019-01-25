@@ -22,13 +22,16 @@ namespace AppstreamLib.RestCall
                       .Accept
                       .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                if (tokenname == "Authorization")
+                if (tokenname != string.Empty)
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-                }
-                else
-                {
-                    client.DefaultRequestHeaders.Add(tokenname, token);
+                    if (tokenname == "Authorization")
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                    }
+                    else
+                    {
+                        client.DefaultRequestHeaders.Add(tokenname, token);
+                    }
                 }
 
                 var httpresponse = await client.GetAsync(ConfigurationManager.AppSettings["rest.call.endpoint"] + servicename);
@@ -69,13 +72,16 @@ namespace AppstreamLib.RestCall
                       .Accept
                       .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                if (tokenname == "Authorization")
+                if(tokenname != string.Empty)
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-                }
-                else
-                {
-                    client.DefaultRequestHeaders.Add(tokenname, token);
+                    if (tokenname == "Authorization")
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                    }
+                    else
+                    {
+                        client.DefaultRequestHeaders.Add(tokenname, token);
+                    }
                 }
 
                 string postbody = JsonConvert.SerializeObject(body);
