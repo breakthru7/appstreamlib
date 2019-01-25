@@ -13,7 +13,7 @@ namespace AppstreamLib.RestCall
 
     public class RequestHandler
     {
-        public static async Task<object> MakeGetRequest<T>(string token, string servicename, string tokenname = "token", bool isIdsrvr = false)
+        public static async Task<T> MakeGetRequest<T>(string token, string servicename, string tokenname = "token", bool isIdsrvr = false)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace AppstreamLib.RestCall
             }
         }
 
-        public static async Task<object> MakePostRequest<T>(string token, string servicename, object body = null, string tokenname = "token")
+        public static async Task<T> MakePostRequest<T>(string token, string servicename, object body = null, string tokenname = "token")
         {
             try
             {
