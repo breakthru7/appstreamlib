@@ -13,7 +13,7 @@ namespace AppstreamLib.RestCall
 
     public class RequestHandler
     {
-        public static async Task<object> MakeGetRequest<T>(string token, string servicename, string tokenname = "token", bool isIdsrvr = false)
+        public static async Task<T> MakeGetRequest<T>(string token, string servicename, string tokenname = "token", bool isIdsrvr = false)
         {
             try
             {
@@ -22,13 +22,16 @@ namespace AppstreamLib.RestCall
                       .Accept
                       .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                if (tokenname == "Authorization")
+                if (tokenname != string.Empty)
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-                }
-                else
-                {
-                    client.DefaultRequestHeaders.Add(tokenname, token);
+                    if (tokenname == "Authorization")
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                    }
+                    else
+                    {
+                        client.DefaultRequestHeaders.Add(tokenname, token);
+                    }
                 }
 
                 var httpresponse = await client.GetAsync(ConfigurationManager.AppSettings["rest.call.endpoint"] + servicename);
@@ -55,7 +58,7 @@ namespace AppstreamLib.RestCall
             }
         }
 
-        public static async Task<object> MakePostRequest<T>(string token, string servicename, object body = null, string tokenname = "token")
+        public static async Task<T> MakePostRequest<T>(string token, string servicename, object body = null, string tokenname = "token")
         {
             try
             {
@@ -69,13 +72,16 @@ namespace AppstreamLib.RestCall
                       .Accept
                       .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                if (tokenname == "Authorization")
+                if(tokenname != string.Empty)
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-                }
-                else
-                {
-                    client.DefaultRequestHeaders.Add(tokenname, token);
+                    if (tokenname == "Authorization")
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                    }
+                    else
+                    {
+                        client.DefaultRequestHeaders.Add(tokenname, token);
+                    }
                 }
 
                 string postbody = JsonConvert.SerializeObject(body);
